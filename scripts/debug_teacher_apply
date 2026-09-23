@@ -1,0 +1,19 @@
+import requests
+BASE='http://127.0.0.1:5000'
+
+s = requests.Session()
+print('Logging in teacher')
+r = s.post(f'{BASE}/api/teacher/login', json={'name':'Mr Kumar','passcode':'k123'})
+print('login', r.status_code, r.text)
+print('Cookies after login:', s.cookies.get_dict())
+
+print('\nGET /api/teacher/leave/list')
+r = s.get(f'{BASE}/api/teacher/leave/list')
+print(r.status_code, r.text)
+
+print('\nPOST /api/teacher/leave/apply')
+r = s.post(f'{BASE}/api/teacher/leave/apply', json={'start_date':'2026-08-17','end_date':'2026-08-17','leave_type':'Sick Leave','reason':'Not well'})
+print(r.status_code, r.text)
+print('Request headers:', r.request.headers)
+print('Request body:', r.request.body)
+
